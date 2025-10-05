@@ -19,7 +19,7 @@ export default function PresentationPage() {
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none font-headline">
-                    Cultivate a Greener Community
+                    A SUA Plataforma de Justiça Ambiental Comunitária
                   </h1>
                   <p className="max-w-[600px] text-muted-foreground md:text-xl">
                     VerdeHub is your platform to connect with local environmental data, discuss important issues, and find resources to make a tangible impact.
