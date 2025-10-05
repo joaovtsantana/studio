@@ -14,6 +14,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
+import { useState, useEffect } from 'react';
 
 // A importação dinâmica é movida para fora do componente para garantir que seja definida apenas uma vez.
 const MapWithNoSSR = dynamic(() => import('../../../components/map'), {
@@ -21,6 +22,12 @@ const MapWithNoSSR = dynamic(() => import('../../../components/map'), {
 });
 
 export default function DenunciarPage() {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
     <div className="space-y-6 pb-8">
       <div className="flex items-center gap-4">
@@ -81,7 +88,7 @@ export default function DenunciarPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="p-0">
-             <MapWithNoSSR />
+             {isClient && <MapWithNoSSR />}
           </CardContent>
         </Card>
       </div>
