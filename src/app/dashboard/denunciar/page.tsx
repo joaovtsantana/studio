@@ -14,14 +14,15 @@ import { Textarea } from '@/components/ui/textarea';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-
-const MapWithNoSSR = dynamic(
-  () => import('../../../components/map'),
-  { ssr: false }
-);
-
+import { useMemo } from 'react';
 
 export default function DenunciarPage() {
+
+  const MapWithNoSSR = useMemo(() => dynamic(
+    () => import('../../../components/map'),
+    { ssr: false }
+  ), []);
+
   return (
     <div className="space-y-6 pb-8">
       <div className="flex items-center gap-4">
