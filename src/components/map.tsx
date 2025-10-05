@@ -32,13 +32,19 @@ export default function Map() {
                 maxZoom: 18,
             });
 
+            const nasaGibsLayer = L.tileLayer('https://map1.vis.earthdata.nasa.gov/wmts-webmerc/BlueMarble_NextGeneration/default/{TileMatrixSet=GoogleMapsCompatible_Level9}/{z}/{y}/{x}.jpeg', {
+                attribution: 'NASA Global Imagery Browse Services (GIBS)',
+                maxZoom: 9
+            });
+
             mapInstance.current = L.map(mapRef.current).setView(position, 13);
             
             osmLayer.addTo(mapInstance.current);
             
             const baseMaps = {
                 "OpenStreetMap": osmLayer,
-                "GOES Satellite": goesSatelliteLayer
+                "GOES Satellite": goesSatelliteLayer,
+                "NASA Blue Marble": nasaGibsLayer
             };
 
             L.control.layers(baseMaps).addTo(mapInstance.current);
