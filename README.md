@@ -14,7 +14,7 @@ VerdeHub é uma aplicação web desenvolvida para fortalecer a ação ambiental 
 - **Mapa Interativo:** Utiliza a biblioteca Leaflet para exibir um mapa com múltiplas camadas, incluindo:
   - **Padrão (OpenStreetMap):** Um mapa de ruas detalhado.
   - **Satélite (Esri):** Imagens de satélite de alta resolução.
-  - **Satélite (NASA):** Imagens "Blue Marble" da NASA.
+  - **Satélite (NASA):** Imagens "Blue Marble" da NASA, disponíveis através do serviço [NASA GIBS](https://earthdata.nasa.gov/gibs).
 - **Dados Ambientais:** Gráficos que exibem dados sobre qualidade do ar, pureza da água e taxas de reciclagem.
 - **Fórum Comunitário:** Uma tabela para listar e acessar tópicos de discussão da comunidade.
 - **Recursos e Dicas:** Uma coleção de artigos e guias sobre práticas sustentáveis.
