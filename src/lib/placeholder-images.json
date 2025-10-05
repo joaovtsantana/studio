@@ -2,9 +2,9 @@
   "placeholderImages": [
     {
       "id": "hero-forest",
-      "description": "A lush, green forest with sunlight filtering through the trees.",
-      "imageUrl": "https://images.unsplash.com/photo-1715389742281-22a266f80186?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxsdXNoJTIwZm9yZXN0fGVufDB8fHx8MTc1OTYxMzAyNXww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "lush forest"
+      "description": "A person holding a small plant in their hands.",
+      "imageUrl": "https://images.unsplash.com/photo-1466692476868-aef6dfb1e735?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxwbGFudCUyMGluJTIwaGFuZHN8ZW58MHx8fHwxNzE2NDk2ODU3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "plant hands"
     },
     {
       "id": "resource-recycling",
