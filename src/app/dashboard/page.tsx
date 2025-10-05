@@ -1,75 +1,64 @@
-import Link from 'next/link';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { ArrowUpRight, BarChart3, BookOpen, MessagesSquare } from 'lucide-react';
+import Link from 'next/link';
+import { Card, CardContent } from '@/components/ui/card';
+import placeholderImages from '@/lib/placeholder-images.json';
+import { CircleArrowRight } from 'lucide-react';
 
-const summaryCards = [
-    {
-        title: "Environmental Data",
-        description: "Explore local air and water quality metrics.",
-        icon: BarChart3,
-        link: "/dashboard/data",
-    },
-    {
-        title: "Community Forum",
-        description: "Join discussions on local environmental topics.",
-        icon: MessagesSquare,
-        link: "/dashboard/forum",
-    },
-    {
-        title: "Tips & Resources",
-        description: "Discover ways to make a positive impact.",
-        icon: BookOpen,
-        link: "/dashboard/resources",
-    },
-]
+const cardData = [
+  {
+    id: 'denunciar',
+    title: 'DENUNCIAR',
+    imageId: 'dashboard-denunciar',
+    href: '#',
+  },
+  {
+    id: 'cursos',
+    title: 'CURSOS E CERTIFICAÇÕES',
+    imageId: 'dashboard-cursos',
+    href: '#',
+  },
+  {
+    id: 'monitoramento',
+    title: 'MONITORAMENTO',
+    imageId: 'dashboard-monitoramento',
+    href: '#',
+  },
+];
 
 export default function DashboardPage() {
+  const imageMap = new Map(placeholderImages.placeholderImages.map(p => [p.id, p]));
+
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold font-headline">Welcome Back!</h1>
-        <p className="text-muted-foreground">
-          Here&apos;s a quick overview of what&apos;s happening in your community.
-        </p>
-      </div>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {summaryCards.map((card) => (
-             <Card key={card.title}>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">{card.title}</CardTitle>
-                    <card.icon className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                    <p className="text-xs text-muted-foreground">{card.description}</p>
-                    <Button asChild variant="link" className="px-0">
-                        <Link href={card.link}>
-                            Go to {card.title} <ArrowUpRight className="ml-1 h-4 w-4" />
-                        </Link>
-                    </Button>
-                </CardContent>
-            </Card>
-        ))}
-      </div>
-       <Card>
-        <CardHeader>
-          <CardTitle>Your Recent Activity</CardTitle>
-          <CardDescription>
-            You haven't posted anything yet. Start a conversation in the forum!
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Button asChild>
-            <Link href="/dashboard/forum">Create a New Post</Link>
-          </Button>
-        </CardContent>
-      </Card>
+    <div className="space-y-8 pb-8">
+      {cardData.map((item) => {
+        const image = imageMap.get(item.imageId);
+        return (
+        <Card key={item.id} className="bg-card text-card-foreground overflow-hidden shadow-lg border-none">
+          <CardContent className="p-0 relative">
+            {image && (
+              <Image
+                src={image.imageUrl}
+                alt={image.description}
+                width={600}
+                height={400}
+                className="w-full h-auto object-cover"
+                data-ai-hint={image.imageHint}
+              />
+            )}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+            <Button
+              asChild
+              size="lg"
+              className="absolute bottom-4 left-1/2 -translate-x-1/2 w-3/4 max-w-xs bg-accent hover:bg-accent/90 text-accent-foreground rounded-full font-bold text-lg"
+            >
+              <Link href={item.href}>
+                {item.title} <CircleArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+          </CardContent>
+        </Card>
+      )})}
     </div>
   );
 }
