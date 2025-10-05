@@ -1,8 +1,8 @@
 'use client';
 
 import 'leaflet/dist/leaflet.css';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
+import { useEffect, useRef } from 'react';
 
 // Corrige o problema com os ícones do marcador no Next.js
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -15,24 +15,34 @@ L.Icon.Default.mergeOptions({
 
 
 export default function Map() {
-    const position: [number, number] = [-23.5505, -46.6333]; // São Paulo coordinates
+    const mapRef = useRef<HTMLDivElement>(null);
+    const mapInstance = useRef<L.Map | null>(null);
+
+    useEffect(() => {
+        // Inicializa o mapa apenas se o container existir e não houver instância do mapa
+        if (mapRef.current && !mapInstance.current) {
+            const position: [number, number] = [-23.5505, -46.6333]; // São Paulo coordinates
+
+            mapInstance.current = L.map(mapRef.current).setView(position, 13);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(mapInstance.current);
+            
+            L.marker(position, { draggable: true })
+             .addTo(mapInstance.current)
+             .bindPopup('Local da denúncia. <br /> Arraste para ajustar.');
+        }
+
+        // Função de limpeza para destruir a instância do mapa ao desmontar
+        return () => {
+            if (mapInstance.current) {
+                mapInstance.current.remove();
+                mapInstance.current = null;
+            }
+        };
+    }, []);
 
     return (
-        <MapContainer
-            center={position}
-            zoom={13}
-            scrollWheelZoom={false}
-            className="h-[400px] w-full z-0"
-        >
-            <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <Marker position={position} draggable={true}>
-            <Popup>
-                Local da denúncia. <br /> Arraste para ajustar.
-            </Popup>
-            </Marker>
-        </MapContainer>
+        <div ref={mapRef} className="h-[400px] w-full z-0" />
     );
 }
