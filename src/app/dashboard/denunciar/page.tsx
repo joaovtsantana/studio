@@ -14,9 +14,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import { useMemo } from 'react';
 
-// Use useMemo to ensure the dynamically imported component is not re-created on every render
+// A importação dinâmica é movida para fora do componente para garantir que seja definida apenas uma vez.
 const MapWithNoSSR = dynamic(() => import('../../../components/map'), {
   ssr: false,
 });
