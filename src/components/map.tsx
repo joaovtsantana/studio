@@ -23,11 +23,26 @@ export default function Map() {
         if (mapRef.current && !mapInstance.current) {
             const position: [number, number] = [-23.5505, -46.6333]; // São Paulo coordinates
 
-            mapInstance.current = L.map(mapRef.current).setView(position, 13);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(mapInstance.current);
+            });
+
+            const goesSatelliteLayer = L.tileLayer('https://cdn.star.nesdis.noaa.gov/GOES16/ABI/CONUS/GEOCOLOR/{z}/{x}/{y}.png', {
+                attribution: 'NOAA / NESDIS / STAR',
+                maxZoom: 18,
+            });
+
+            mapInstance.current = L.map(mapRef.current).setView(position, 13);
             
+            osmLayer.addTo(mapInstance.current);
+            
+            const baseMaps = {
+                "OpenStreetMap": osmLayer,
+                "GOES Satellite": goesSatelliteLayer
+            };
+
+            L.control.layers(baseMaps).addTo(mapInstance.current);
+
             L.marker(position, { draggable: true })
              .addTo(mapInstance.current)
              .bindPopup('Local da denúncia. <br /> Arraste para ajustar.');
