@@ -13,9 +13,18 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
-import Map from '@/components/map';
+import dynamic from 'next/dynamic';
+import { useMemo } from 'react';
 
 export default function DenunciarPage() {
+    const Map = useMemo(() => dynamic(
+        () => import('@/components/map'),
+        { 
+          loading: () => <p>A map is loading</p>,
+          ssr: false
+        }
+      ), [])
+
   return (
     <div className="space-y-6 pb-8">
       <div className="flex items-center gap-4">
