@@ -16,13 +16,12 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { useMemo } from 'react';
 
+// Use useMemo to ensure the dynamically imported component is not re-created on every render
+const MapWithNoSSR = dynamic(() => import('../../../components/map'), {
+  ssr: false,
+});
+
 export default function DenunciarPage() {
-
-  const MapWithNoSSR = useMemo(() => dynamic(
-    () => import('../../../components/map'),
-    { ssr: false }
-  ), []);
-
   return (
     <div className="space-y-6 pb-8">
       <div className="flex items-center gap-4">
