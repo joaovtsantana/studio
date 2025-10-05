@@ -21,15 +21,14 @@ export default function Map() {
     useEffect(() => {
         // Inicializa o mapa apenas se o container existir e não houver instância do mapa
         if (mapRef.current && !mapInstance.current) {
-            const position: [number, number] = [-23.5505, -46.6333]; // São Paulo coordinates
+            const position: [number, number] = [-14.2350, -51.9253]; // Coordenadas centradas no Brasil
 
             const osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             });
 
-            const goesSatelliteLayer = L.tileLayer('https://cdn.star.nesdis.noaa.gov/GOES16/ABI/CONUS/GEOCOLOR/{z}/{x}/{y}.png', {
-                attribution: 'NOAA / NESDIS / STAR',
-                maxZoom: 18,
+            const esriSatelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community'
             });
 
             const nasaGibsLayer = L.tileLayer('https://map1.vis.earthdata.nasa.gov/wmts-webmerc/BlueMarble_NextGeneration/default/{TileMatrixSet=GoogleMapsCompatible_Level9}/{z}/{y}/{x}.jpeg', {
@@ -37,21 +36,21 @@ export default function Map() {
                 maxZoom: 9
             });
 
-            mapInstance.current = L.map(mapRef.current).setView(position, 13);
+            mapInstance.current = L.map(mapRef.current).setView(position, 5);
             
             osmLayer.addTo(mapInstance.current);
             
             const baseMaps = {
-                "OpenStreetMap": osmLayer,
-                "GOES Satellite": goesSatelliteLayer,
-                "NASA Blue Marble": nasaGibsLayer
+                "Padrão": osmLayer,
+                "Satélite (Esri)": esriSatelliteLayer,
+                "Satélite (NASA)": nasaGibsLayer
             };
 
             L.control.layers(baseMaps).addTo(mapInstance.current);
 
-            L.marker(position, { draggable: true })
+            L.marker([-23.5505, -46.6333], { draggable: true })
              .addTo(mapInstance.current)
-             .bindPopup('Local da denúncia. <br /> Arraste para ajustar.');
+             .bindPopup('São Paulo. <br /> Arraste para ajustar.');
         }
 
         // Função de limpeza para destruir a instância do mapa ao desmontar
